@@ -19,9 +19,45 @@ export default ({ data }) => {
           css={css`
             display: inline-block;
             border-bottom: 1px solid;
+        `}
+        >
+          Contentful
+        </h1>
+        <h4>{data.allContentfulBlogPost.totalCount} Posts</h4>
+        {data.allContentfulBlogPost.edges.map(({ node }) => (
+          <div key={node.id}>
+            <Link
+                to={node.slug}
+                css={css`
+                  text-decoration: none;
+                  color: inherit;
+                `
+  }
+              >
+              <h3
+                css={css`
+                  margin-bottom: ${rhythm(1 / 4)};
+                `}
+              >
+                {node.title}{" "}
+                <span
+                  css={css`
+                    color: #bbb;
+                  `}
+                >
+                  — {node.publishedDate}
+                </span>
+              </h3>
+            </Link>
+          </div>
+        ))}
+        <h1
+          css={css`
+            display: inline-block;
+            border-bottom: 1px solid;
           `}
         >
-          Amazing Pandas Eating Things
+          Markdown
         </h1>
         <h4>{data.allMarkdownRemark.totalCount} Posts</h4>
         {data.allMarkdownRemark.edges.map(({ node }) => (
@@ -59,6 +95,20 @@ export default ({ data }) => {
 
 export const query = graphql`
   query {
+    allContentfulBlogPost(sort: {
+      fields: publishedDate,
+      order: DESC
+    }) {
+      totalCount
+      edges {
+        node {
+          id
+          title
+          slug
+          publishedDate(fromNow: true)
+        }
+      }
+    }
     allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
       totalCount
       edges {
