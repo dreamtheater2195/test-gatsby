@@ -1,11 +1,11 @@
 import React from "react"
 import { graphql } from "gatsby"
 import Layout from "../components/layout"
-
+import Head from '../components/head'
 export default ({ data }) => {
-  console.log(data)
   return (
     <Layout>
+      <Head title="My Files" />
       <div>
         <h1>My Site's Files</h1>
         <table>

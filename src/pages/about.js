@@ -1,15 +1,11 @@
 import React from "react"
 import { graphql } from "gatsby"
 import Layout from "../components/layout"
-import { Helmet } from "react-helmet"
+import Head from '../components/head'
 
 export default ({ data }) => (
   <Layout>
-    <Helmet>
-      <meta charSet="utf-8" />
-      <title>About</title>
-      <link rel="canonical" href="http://mysite.com/example" />
-    </Helmet>
+    <Head title="About" />
     <h1>About {data.site.siteMetadata.title}</h1>
     <p>
       We're the only site running on your computer dedicated to showing the best

@@ -3,17 +3,13 @@ import { graphql, Link } from "gatsby"
 import { css } from "@emotion/core"
 import { rhythm } from "../utils/typography"
 import Layout from "../components/layout"
-import { Helmet } from "react-helmet"
+import Head from '../components/head'
 
 export default ({ data }) => {
   console.log(data)
   return (
     <Layout>
-      <Helmet>
-        <meta charSet="utf-8" />
-        <title>Home</title>
-        <link rel="canonical" href="http://mysite.com/example" />
-      </Helmet>
+      <Head title="Home" />
       <div>
         <h1
           css={css`
