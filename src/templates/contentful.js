@@ -6,7 +6,7 @@ import Head from '../components/head'
 
 export const query = graphql`
   query($slug: String!) {
-    contentfulBlogPost({ slug: { eq: $slug }) {
+    contentfulBlogPost(slug: { eq: $slug }) {
       title
       publishedDate(fromNow: true)
       body {

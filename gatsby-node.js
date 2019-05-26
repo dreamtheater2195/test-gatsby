@@ -14,7 +14,7 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
 
 exports.createPages = ({ graphql, actions }) => {
   const { createPage } = actions
-  return graphql(`
+  const markdown =  graphql(`
     {
       allMarkdownRemark {
         edges {
@@ -27,15 +27,37 @@ exports.createPages = ({ graphql, actions }) => {
       }
     }
   `
-).then(result => {
-  result.data.allMarkdownRemark.edges.forEach(({ node }) => {
-    createPage({
-      path: node.fields.slug,
-      component: path.resolve(`./src/templates/blog-post.js`),
-      context: {
-        slug: node.fields.slug,
-      },
+  ).then(result => {
+    result.data.allMarkdownRemark.edges.forEach(({ node }) => {
+      createPage({
+        path: node.fields.slug,
+        component: path.resolve(`./src/templates/markdown.js`),
+        context: {
+          slug: node.fields.slug,
+        },
+      })
     })
   })
+  const contentful = graphql(`
+    {
+      allContentfulBlogPost {
+        edges {
+          node {
+            slug
+          }
+        }
+      }
+    }
+  `).then(result => {
+    result.data.allContentfulBlogPost.edges.forEach(({ node }) => {
+      createPage({
+        path: node.slug,
+        component: path.resolve(`./src/templates/contentful.js`),
+        context: {
+          slug: node.slug,
+        },
+      })
+    })
   })
+  return Promise.all([markdown, contentful])
 }
